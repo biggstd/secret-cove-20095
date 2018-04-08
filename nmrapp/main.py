@@ -21,7 +21,7 @@ except Exception as inst:
     print(f'got {inst} as an error.')
     df = pd.DataFrame({
         'Not': [0, 1, 2, 3],
-        'Working': [2, 5, 6]
+        'Working': [2, 5, 6, 8]
     })
 
 
