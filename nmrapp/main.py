@@ -12,9 +12,9 @@ rd = redis.from_url(os.environ.get("REDIS_URL"))
 
 try:
     # Get the HTML session context in order to find the appropriate json filepath.
-    args = curdoc().session_context.request.arguments
-    data_hash = args.get('hash')[0].decode("utf-8")
-    print(data_hash)
+    # args = curdoc().session_context.request.arguments
+    # data_hash = args.get('hash')[0].decode("utf-8")
+    # print(data_hash)
     print("bokeh trying to read hash object.")
     df = rd.get("T35TH45H")
 
