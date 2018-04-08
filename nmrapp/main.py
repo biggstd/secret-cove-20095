@@ -16,9 +16,9 @@ try:
     # data_hash = args.get('hash')[0].decode("utf-8")
     # print(data_hash)
     print("bokeh trying to read hash object.")
-    df = rd.get("T35TH45H")
+    df = pd.read_msgpack(rd.get("T35TH45H"))
 
-except Exception as inst:
+except ValueError as inst:
     print('SESSION FAILED')
     print(f'got {inst} as an error.')
     df = pd.DataFrame({
