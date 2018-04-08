@@ -14,6 +14,7 @@ try:
     # Get the HTML session context in order to find the appropriate json filepath.
     args = curdoc().session_context.request.arguments
     data_hash = args.get('hash')[0].decode("utf-8")
+    print("bokeh trying to read hash object.")
     df = rd.get(data_hash)
 
 except Exception as inst:
@@ -27,6 +28,7 @@ except Exception as inst:
 
 source = ColumnDataSource(data=df)
 
+print('column names: ', list(df))
 columns = [TableColumn(field=c, title=c) for c in list(df)]
 
 data_table = DataTable(source=source, columns=columns)
