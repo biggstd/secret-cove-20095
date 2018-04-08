@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask-wtf = "*"
+pandas = "==0.20.3"
+tornado = "==4.3"
+bokeh = "*"
+gunicorn = "*"
+redis = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"
