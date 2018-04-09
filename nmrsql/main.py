@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 import pandas.io.sql as psql
-import sqlite3 as sql
+import psycopg2
 
 from bokeh.plotting import figure
 from bokeh.layouts import layout, widgetbox
@@ -13,10 +13,10 @@ from bokeh.models.widgets import Div, Tabs, Panel
 
 
 # Get environment variables.
-sql_url = os.environ.get('DATABASE_URL')
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
 # Setup the SQL query.
-conn = sql.connect(sql_url)
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 query = '''SELECT * FROM nmr_lit_data'''
 
 
