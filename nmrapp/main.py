@@ -17,6 +17,7 @@ try:
     # print(data_hash)
     print("bokeh trying to read hash object.")
     df = pd.read_msgpack(rd.get("T35TH45H"))
+    print(df)
 
 except ValueError as inst:
     print('SESSION FAILED')
