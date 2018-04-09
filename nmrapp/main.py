@@ -8,9 +8,9 @@ import pandas as pd
 import os
 import redis
 
-rd = redis.from_url(os.environ.get("REDIS_URL"))
 
 try:
+    rd = redis.from_url(os.environ.get("REDIS_URL"))
     # Get the HTML session context in order to find the appropriate json filepath.
     # args = curdoc().session_context.request.arguments
     # data_hash = args.get('hash')[0].decode("utf-8")

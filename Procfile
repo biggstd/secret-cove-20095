@@ -1,1 +1,1 @@
-web: bokeh serve --port=$PORT --host=secret-cove-20095.herokuapp.com --allow-websocket-origin=agile-anchorage-48248.herokuapp.com --host=0.0.0.0:5000 --address=0.0.0.0 --num-procs=1 --use-xheaders app nmrapp
+web: bokeh serve --port=$PORT --allow-websocket-origin=$BOKEH_ALLOWED_WEBSOCKET --address=0.0.0.0 --num-procs=1 --use-xheaders app nmrapp nmrsql
