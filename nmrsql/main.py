@@ -10,6 +10,8 @@ from bokeh.models import ColumnDataSource, HoverTool, Div, TapTool, LinearInterp
 from bokeh.models.widgets import Slider, Select, TextInput
 from bokeh.io import curdoc
 from bokeh.models.widgets import Div, Tabs, Panel
+from bokeh.transform import factor_cmap
+from bokeh.palettes import Category10
 
 
 # Get environment variables.
