@@ -1,7 +1,7 @@
 
 from bokeh.layouts import row, widgetbox
 from bokeh.models import ColumnDataSource
-from bokeh.models.widgets import DataTable, TableColumn
+from bokeh.models.widgets import DataTable
 from bokeh.io import curdoc
 
 import pandas as pd
@@ -11,13 +11,7 @@ import redis
 
 try:
     rd = redis.from_url(os.environ.get("REDIS_URL"))
-    # Get the HTML session context in order to find the appropriate json filepath.
-    # args = curdoc().session_context.request.arguments
-    # data_hash = args.get('hash')[0].decode("utf-8")
-    # print(data_hash)
-    print("bokeh trying to read hash object.")
-    df = pd.read_msgpack(rd.get("T35TH45H"))
-    print(df)
+    df = pd.read_msgpack(rd.get("csv_preview"))
 
 except ValueError as inst:
     print('SESSION FAILED')
@@ -31,9 +25,9 @@ except ValueError as inst:
 source = ColumnDataSource(data=df)
 
 print('column names: ', list(df))
-columns = [TableColumn(field=c, title=c) for c in list(df)]
+# columns = [TableColumn(field=c, title=c) for c in list(df)]
 
-data_table = DataTable(source=source, columns=columns)
+data_table = DataTable(source=source)# columns=columns)
 
 
 table = widgetbox(data_table)
