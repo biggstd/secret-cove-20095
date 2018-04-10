@@ -90,7 +90,7 @@ def create_figure():
         if color.value != 'None':
             colors = factor_cmap(
                 field_name=color.value,
-                palette=d3[Category10][10],
+                palette=d3["Category10"][10],
                 factors=sorted(source.data[color.value].unique())
             )
         else:
