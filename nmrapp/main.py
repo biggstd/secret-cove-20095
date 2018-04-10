@@ -1,7 +1,7 @@
 
 from bokeh.layouts import row, widgetbox
 from bokeh.models import ColumnDataSource
-from bokeh.models.widgets import DataTable
+from bokeh.models.widgets import DataTable, TableColumn
 from bokeh.io import curdoc
 
 import pandas as pd
@@ -25,9 +25,10 @@ except ValueError as inst:
 source = ColumnDataSource(data=df)
 
 print('column names: ', list(df))
-# columns = [TableColumn(field=c, title=c) for c in list(df)]
 
-data_table = DataTable(source=source)# columns=columns)
+columns = [TableColumn(field=c, title=c) for c in list(df)]
+
+data_table = DataTable(source=source, columns=columns)
 
 
 table = widgetbox(data_table)
