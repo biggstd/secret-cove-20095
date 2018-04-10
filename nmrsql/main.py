@@ -11,7 +11,7 @@ from bokeh.models.widgets import Slider, Select, TextInput
 from bokeh.io import curdoc
 from bokeh.models.widgets import Div, Tabs, Panel
 from bokeh.transform import factor_cmap
-from bokeh.palettes import Spectral5
+from bokeh.palettes import d3
 
 
 # Get environment variables.
@@ -90,7 +90,7 @@ def create_figure():
         if color.value != 'None':
             colors = factor_cmap(
                 field_name=color.value,
-                palette=Spectral5,
+                palette=d3[Category10][10],
                 factors=sorted(source.data[color.value].unique())
             )
         else:
