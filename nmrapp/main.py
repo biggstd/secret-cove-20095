@@ -12,7 +12,6 @@ import redis
 try:
     rd = redis.from_url(os.environ.get("REDIS_URL"))
     df = pd.read_msgpack(rd.get("csv_preview"))
-    print(df)
 
 except ValueError as inst:
     print('SESSION FAILED')
