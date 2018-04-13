@@ -5,8 +5,6 @@ from bokeh.models.widgets import DataTable, TableColumn, Div, Paragraph
 from bokeh.io import curdoc
 from bokeh.models.widgets import Select, TextInput, MultiSelect
 
-from models import FileInput
-
 import pandas as pd
 import os
 import redis
