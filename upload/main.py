@@ -16,21 +16,16 @@ try:
     df = pd.read_msgpack(rd.get("user_upload"))
 
 except ValueError as inst:
-    pass
+    df = dict(variable_a=[0, 1], variable_b=[0, 1])
 
 
-source = ColumnDataSource(data=dict(variable_a=[0, 1], variable_b=[0, 1]))
+source = ColumnDataSource(data=df)
 
-
-# ROW 1
-# row_1_div = Div(text="<h3>.csv Datafile Upload</h3>")
-# button_input = FileInput(id="fileSelect", accept=".csv")
 
 TEMP_OPTIONS = ['a', 'b', 'c']
 
 # ROW 2
 # Metadata
-name_selector = TextInput(title="Experiment Title")
 doi_selector = TextInput(title="DOI")
 author_mselector = MultiSelect(
     title="Author",
@@ -49,7 +44,6 @@ peak_type_sel = Select(title="Peak Type", options=TEMP_OPTIONS)
 or_text = Paragraph(text="or")
 
 metadata_col = column(widgetbox([
-    name_selector,
     doi_selector,
     author_mselector,
     al_source_sel,
@@ -64,12 +58,8 @@ metadata_col = column(widgetbox([
 
 
 def change_plot_data(attr, old, new):
-    print("what")
-    print(source.data)
     print(new)
-
     new_df = pd.DataFrame(new)
-    print(new_df)
     source.data = source.from_df(new_df)
 
     new_df = pd.DataFrame(source.data)
@@ -78,8 +68,6 @@ def change_plot_data(attr, old, new):
     my_layout.children[1].children[1] = data_table
 
 
-button_input.on_change('data', change_plot_data)
-
 df = pd.DataFrame(source.data)
 columns = [TableColumn(field=c, title=c) for c in list(df)]
 data_table = DataTable(source=source)
@@ -87,7 +75,6 @@ data_table = DataTable(source=source)
 
 my_layout = layout(
     children=[
-        # [row_1_div, button_input],
         [metadata_col, data_table],
     ],
     sizing_mode='fixed'
