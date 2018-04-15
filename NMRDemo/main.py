@@ -157,7 +157,7 @@ def create_figure():
         panel = Panel(child=fig, title=axis_type)
         panels.append(panel)
 
-    tabs = Tabs(tabs=panels, width=620)
+    tabs = Tabs(tabs=panels, width=630)
 
     return tabs
 
@@ -297,7 +297,7 @@ controls = widgetbox([x_selector, y_selector, color, size])
 
 layout = layout(
     children=[
-        title_div,
+        # title_div,
         [controls, create_figure(), build_metadata_paragraph()],
     ],
     sizing_mode='fixed'
