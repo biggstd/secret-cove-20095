@@ -263,14 +263,14 @@ def build_metadata_paragraph(study_key=None, assay_key=None):
     if all(v is None for v in [study_key, assay_key]):
         return Div(
             text="No data point selected.",
-            width=300,
+            width=350,
         )
     else:
         active_study = metadata_dict[study_key]
         active_assay = metadata_dict[assay_key]
         new_paragarph = Div(
             text=format_assay_text(active_study, active_assay),
-            width=300,
+            width=350,
         )
         return new_paragarph
 
