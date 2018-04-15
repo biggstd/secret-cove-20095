@@ -12,6 +12,7 @@ gunicorn = "*"
 redis = "*"
 "psycopg2-binary" = "*"
 "psycopg2" = "*"
+isatools = "*"
 
 [dev-packages]
 
