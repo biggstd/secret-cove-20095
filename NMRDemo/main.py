@@ -166,7 +166,7 @@ def update_plot(attr, old, new):
     """
     Define the function to be run upon an update call.
     """
-    layout.children[1].children[1] = create_figure()
+    layout.children[0].children[1] = create_figure()
     pass
 
 
