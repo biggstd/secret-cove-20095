@@ -82,7 +82,7 @@ def tap_select_callback(attr, old, new):
     study_key = source.data['study_ID'][new_index]
     assay_key = source.data['assay_ID'][new_index]
     # print(study_key, assay_key)
-    layout.children[1].children[2] = build_metadata_paragraph(
+    layout.children[0].children[2] = build_metadata_paragraph(
         study_key, assay_key)
 
 
