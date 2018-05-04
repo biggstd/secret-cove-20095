@@ -1,83 +1,101 @@
+"""
 
-from bokeh.layouts import row, widgetbox, column, layout, Spacer
-from bokeh.models import ColumnDataSource
-from bokeh.models.widgets import DataTable, TableColumn, Div, Paragraph
-from bokeh.io import curdoc
-from bokeh.models.widgets import Select, TextInput, MultiSelect
+Bokeh application for creating new ISA documents.
 
-import pandas as pd
+Datatypes to be implement:
+
++ NMR
+    + Simulated
+    + Experimental
+    + Literature
++ Raman
+    + Simulated
+    + Experimental
+    + Literature
++ Sources (can take characteristics only)
++ Samples
+
+"""
+
+# Add the isadream file to pythons path so it can be imported.
+import sys
 import os
-import redis
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-try:
-    rd = redis.from_url(os.environ.get("REDIS_URL"))
-    df = pd.read_msgpack(rd.get("user_upload"))
-
-except ValueError as inst:
-    df = dict(variable_a=[0, 1], variable_b=[0, 1])
-
-
-source = ColumnDataSource(data=df)
-
-
-TEMP_OPTIONS = ['a', 'b', 'c']
-
-# ROW 2
-# Metadata
-doi_selector = TextInput(title="DOI")
-author_mselector = MultiSelect(
-    title="Author",
-    options=TEMP_OPTIONS
+# Import ontology definitinos.
+from isadream.ontologies import (
+    DATA_TYPES,
+    ONTOLOGY_ANNOTATIONS,
+    UNIT_FACTORS,
+    FACTOR_FACTORS,
 )
 
-# Study Factors
-al_source_sel = Select(title="Aluminum Source", options=TEMP_OPTIONS)
-al_text_in = TextInput(title="New Aluminum Source")
-al_concentration_in = TextInput(title="Al Molarity")
-base_source_sel = Select(title="Base Source", options=TEMP_OPTIONS)
-base_concentration_in = TextInput(title="Base Molarity")
-counter_ion_sel = Select(title="Counter Ion Element", options=TEMP_OPTIONS)
-peak_type_sel = Select(title="Peak Type", options=TEMP_OPTIONS)
-
-or_text = Paragraph(text="or")
-
-metadata_col = column(widgetbox([
-    doi_selector,
-    author_mselector,
-    al_source_sel,
-    or_text,
-    al_text_in,
-    al_concentration_in,
-    base_source_sel,
-    base_concentration_in,
-    counter_ion_sel,
-    peak_type_sel,
-]))
+# Display and data science imports.
+import bokeh
+import bokeh.io
+import bokeh.layouts
 
 
-def change_plot_data(attr, old, new):
-    print(new)
-    new_df = pd.DataFrame(new)
-    source.data = source.from_df(new_df)
-
-    new_df = pd.DataFrame(source.data)
-    columns = [TableColumn(field=c, title=c) for c in list(new_df)]
-    data_table = DataTable(source=source, columns=columns)
-    my_layout.children[1].children[1] = data_table
+# Form generation widgets.
+user_data_type = bokeh.models.widgets.RadioButtonGroup(
+    labels=[f.get('short_display') for f in DATA_TYPES.values()],
+    active=0,
+)
 
 
-df = pd.DataFrame(source.data)
-columns = [TableColumn(field=c, title=c) for c in list(df)]
-data_table = DataTable(source=source)
+factor_options = [f.get('long_display') for f in FACTOR_FACTORS.values()]
+factor_values = [f.get('factor_options') for f in FACTOR_FACTORS.values()]
+factor_dict = {k: v for k, v in zip(factor_options, factor_values)}
 
 
-my_layout = layout(
+def create_factor():
+
+    factor = bokeh.models.widgets.Select(
+        options=factor_options, value=factor_options[0])
+
+    factor_opts = bokeh.models.widgets.Select(
+        options=["None"], value="None")
+
+    def factor_change(attr, old, new):
+        factor_opts.options=factor_dict.get(factor.value)
+
+    factor.on_change('value', factor_change)
+
+    return [factor, factor_opts]
+
+
+def add_factor():
+    print(len(layout.children))
+    factor, factor_opts = create_factor()
+    new_row = bokeh.layouts.row(factor, factor_opts)
+    layout.children.append(new_row)
+
+
+
+def remove_factor():
+    if len(layout.children) <= 2:
+        return
+    layout.children.pop()
+
+
+b_factor = bokeh.models.widgets.Button(
+    label='New Factor', button_type="success")
+b_factor.on_click(add_factor)
+
+b_rm_factor = bokeh.models.widgets.Button(
+    label='Remove Factor', button_type="warning")
+b_rm_factor.on_click(remove_factor)
+
+
+layout = bokeh.layouts.layout(
+    sizing_mode='fixed',
     children=[
-        [metadata_col, data_table],
-    ],
-    sizing_mode='fixed'
+        user_data_type,
+        [b_factor, b_rm_factor]
+    ]
 )
 
-curdoc().add_root(my_layout)
 
-curdoc().title = "Upload Data CSV"
+bokeh.io.curdoc().add_root(layout)
+bokeh.io.curdoc().title = "Upload Data"
