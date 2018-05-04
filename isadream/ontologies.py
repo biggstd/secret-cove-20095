@@ -12,6 +12,8 @@ from isatools.model import (
     # Comment,
     # Investigation,
     # OntologySource,
+    Characteristic,
+    Source,
     OntologyAnnotation,
 )
 
@@ -50,7 +52,8 @@ UNIT_FACTORS = dict(
         short_display='M', long_display='Molarity'
     ),
     wt_purity=dict(
-        name='wt_purity', type=OntologyAnnotation(term='Percent Purity by Weight'),
+        name='wt_purity',
+        type=OntologyAnnotation(term='Percent Purity by Weight'),
         short_display=u'wt %', long_display='Percent Purity by Weight'
     ),
     celsius=dict(
@@ -72,6 +75,22 @@ FACTOR_FACTORS = dict(
         factor_options=['Low', 'Medium', 'High']
     ),
 )
+
+MATERIAL_SOURCES = dict(
+    al_wire=dict(
+        name='Al wire',
+        type=Source(
+            name='Aluminum Wire',
+        )
+    ),
+    sodium_hydroxide_solid=dict(
+        name='Solid Sodium Hydroxide',
+        type=Source(
+            name='Solid Sodium Hydroxide',
+        )
+    )
+)
+
 
 # OntologyAnnotation(term='Percent Purity by Weight'),
 # OntologyAnnotation(term='Celsius'),
