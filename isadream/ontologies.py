@@ -88,7 +88,25 @@ MATERIAL_SOURCES = dict(
         type=Source(
             name='Solid Sodium Hydroxide',
         )
-    )
+    ),
+    potassium_hydroxide_solid=dict(
+        name='Solid Potassium Hydroxide',
+        type=Source(
+            name='Solid Potassium Hydroxide',
+        )
+    ),
+    caesium_hydroxide_solid=dict(
+        name='Solid Caesium Hydroxide',
+        type=Source(
+            name='Solid Caesium Hydroxide',
+        )
+    ),
+    lithium_hydroxide_solid=dict(
+        name='Solid Lithium Hydroxide',
+        type=Source(
+            name='Solid Lithium Hydroxide',
+        )
+    ),
 )
 
 
