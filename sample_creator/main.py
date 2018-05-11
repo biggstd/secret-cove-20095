@@ -22,6 +22,12 @@ from isadream.ontologies import (
 
 
 def create_source_field():
+
+    # menu = list(zip(factor_options, factor_ontologies))
+
+    # source_field = bokeh.models.widgets.Dropdown(
+    #     label='Material Source', button_type='success', menu=menu)
+
     source_field = bokeh.models.widgets.Select(name='source_field',
         options=factor_options, value=factor_options[0])
     return source_field
@@ -41,6 +47,9 @@ def delete_source_field():
 
 
 factor_options = [f.get('name') for f in MATERIAL_SOURCES.values()]
+# factor_ontologies = [str(f) for f in MATERIAL_SOURCES.keys()]
+
+sample_name_input = bokeh.models.widgets.TextInput(placeholder='Sample Name')
 
 
 create_source_button = bokeh.models.widgets.Button(
@@ -55,6 +64,7 @@ remove_source_button.on_click(delete_source_field)
 layout = bokeh.layouts.layout(
     sizing_mode='fixed',
     children=[
+        sample_name_input,
         create_source_button,
         remove_source_button,
         bokeh.models.widgets.Paragraph(text='Description...'),
@@ -62,7 +72,7 @@ layout = bokeh.layouts.layout(
     ]
 )
 
-source_layout_key = layout.children[3].children
+source_layout_key = layout.children[4].children
 
 
 bokeh.io.curdoc().add_root(layout)
